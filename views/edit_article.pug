@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Edit Post
+  form(method="POST", action="/posts/edit/"+post._id)
+    #form-group
+      label Title:
+      input.form-control(name="title", type="text", value=post.title)
+    #form-group
+      label Content:
+      textarea.form-control(name="content")= post.content
+    input.btn.btn-primary(type="submit", value="Submit")

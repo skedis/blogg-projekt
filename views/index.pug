@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Posts
+  ul.list-group.list-group-flush
+    each post, i in posts
+      li.list-group-item
+        a(href="/post/"+post._id)= post.title
+        span.text-secondary.float-right Written by #{post.author}
