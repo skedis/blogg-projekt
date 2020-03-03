@@ -22,6 +22,8 @@ db.on('error', (err) => {
 
 const app = express();
 
+const port = process.env.port || 3000;
+
 // Set view engine
 app.set('view engine', 'pug'); 
 
@@ -67,7 +69,7 @@ app.use(indexRoute)
 app.use(postsRoute)
 app.use(usersRoute)
 
-
+// Start listening for requests
 app.listen(3000, () => {
-  console.log('Server started.');
+  console.log(`Server now listening at http://127.0.0.1:${port}/`);
 });

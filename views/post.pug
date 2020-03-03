@@ -2,8 +2,8 @@ extends layout
 
 block content
   h1= post.title
-  h5 Author: #{author}
-  p= post.body
+  h5 Author: #{username}
+  p= post.content
   hr
   //- Only show buttons if user is logged in and the post author
   if user

@@ -1,13 +1,32 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
 // Models
-let Post = require('../models/post');
+let Post = require("../models/post");
 
 // Routes
-router.get('/', (req, res) => {
-  Post.find({}, (err, posts) => {
+router.get("/", (req, res) => {
+
+  // Problem >>>>>>>>
+  Post.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "user"
+      }
+    }
+  ]).exec((err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result);
+    }
+  });
+
+  /*   Post.find({}, (err, posts) => {
     if (err) {
       console.log(err);
     } else {
@@ -15,7 +34,7 @@ router.get('/', (req, res) => {
         posts: posts
       });
     }
-  });
+  }); */
 });
 
 module.exports = router;

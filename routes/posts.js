@@ -79,9 +79,9 @@ router.get('/posts/:id', (req, res) => {
     User.findById(post.author, (err, user) => {
       res.render('post', {
         post: post,
-        author: user.username
+        username: user.username
       });
-    })
+    });
   });
 });
 

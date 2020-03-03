@@ -6,14 +6,14 @@ const postSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  author: {
+  content: {
     type: String,
     required: true
   },
-  content: {
+  author: {
     type: String,
     required: true
   }
 });
 
-const Post = module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Post', postSchema);
