@@ -30,7 +30,7 @@ app.set('view engine', 'pug');
 // Set public folder
 app.use(express.static(path.join(__dirname, 'public'))); 
 
-// Midlewares ----------------------------------------
+// Middlewares ----------------------------------------
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())

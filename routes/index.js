@@ -7,7 +7,6 @@ let Post = require("../models/post");
 
 // Routes
 router.get("/", (req, res) => {
-
   // Problem >>>>>>>>
   Post.aggregate([
     {
@@ -22,7 +21,9 @@ router.get("/", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(result);
+      res.render('index', {
+        posts: result
+      });
     }
   });
 
