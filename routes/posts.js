@@ -1,5 +1,6 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator')
+const isAuth = require('../util/is-auth');
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ let User = require('../models/user');
 // Routes ----------------------------------------------
 
 // Add post GET
-router.get('/posts/add', ensureAuthenticated, (req, res) => {
+router.get('/posts/add', isAuth, (req, res) => {
   res.render('add_post');
 });
 
@@ -42,7 +43,7 @@ router.post('/posts/add', [
 });
 
 // Edit Form GET
-router.get('/posts/edit/:id', ensureAuthenticated, (req, res) => {
+router.get('/posts/edit/:id', isAuth, (req, res) => {
   Post.findById(req.params.id, (err, post) => {
     if (post.author != req.user._id) {
       req.flash('danger', 'You are not authorized to edit this')
@@ -60,6 +61,7 @@ router.post('/posts/edit/:id', (req, res) => {
   let post = {}
   post.title = req.body.title;
   post.content = req.body.content;
+  post.modifiedAt = Date.now();
 
   let query = { _id: req.params.id }
 
@@ -106,14 +108,5 @@ router.delete('/posts/:id', (req, res) => {
     });
   }
 });
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    req.flash('danger', 'You must login to view this');
-    res.redirect('/users/login');
-  }
-}
 
 module.exports = router;

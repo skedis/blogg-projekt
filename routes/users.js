@@ -47,7 +47,7 @@ router.post('/users/register', [
       password: password
     });
 
-    // Salting password
+    // Salting & hashing password
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) {
@@ -63,7 +63,7 @@ router.post('/users/register', [
             req.flash('success', 'Succesfully registered');
             res.redirect('/users/login');
           }
-        })
+        });
       });
     });
   }

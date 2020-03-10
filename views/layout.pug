@@ -8,6 +8,7 @@ html
     script(src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js", integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo", crossorigin="anonymous")
     script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js", integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6", crossorigin="anonymous")
   body
+    //- Page navbar
     nav.navbar.navbar-expand-md.navbar-dark.bg-info
       a.navbar-brand(href="/") Blogsida
       button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarMain", aria-controls="navbarMain", aria-expanded="false", aria-label="Toggle navigation")
@@ -17,6 +18,7 @@ html
           li.nav-item
             a.nav-link(href="/posts/add") Add Post
         ul.nav.navbar-nav.navbar-right
+          //- If user is logged in display logout button, otherwise login, register
           if user
             li.nav-item
               span.navbar-text.text-info Signed in as: #{user.username}
@@ -35,4 +37,7 @@ html
           div(class="alert alert-danger") #{error.msg}
       block content
 
-    script(src="/js/main.js")
+    //- Page footer
+    footer.footer.fixed-bottom.bg-info
+      .container
+        h4 Test Footer
