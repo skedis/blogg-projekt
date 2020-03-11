@@ -22,22 +22,12 @@ router.get('/', (req, res) => {
       console.log(err);
     } else {
       console.log(result);
-      
+
       res.render('index', {
         posts: result
       });
     }
   });
-
-  /*   Post.find({}, (err, posts) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render('index', {
-        posts: posts
-      });
-    }
-  }); */
 });
 
 module.exports = router;

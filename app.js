@@ -33,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middlewares ----------------------------------------
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json())
 
 // Express session middleware
 app.use(session({

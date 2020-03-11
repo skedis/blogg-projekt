@@ -5,7 +5,6 @@ deleteButton && deleteButton.addEventListener('click', deletePost);
 // DELETE request method
 function deletePost() {
   let id = deleteButton.getAttribute('data-id');
-  console.log(id);
 
   fetch('/posts/' + id, {
       method: 'DELETE',

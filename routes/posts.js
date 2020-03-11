@@ -1,6 +1,6 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator')
-const isAuth = require('../util/is-auth');
+const isAuth = require('../util/ensureAuthenticated');
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.get('/posts/add', isAuth, (req, res) => {
 router.post('/posts/add', [
   check('title').not().isEmpty().withMessage('Title is required'),
   check('content').not().isEmpty().withMessage('Content is required')
-], (req, res) => {
+], isAuth, (req, res) => {
   // Get validation errors
   const errors = validationResult(req);
 
@@ -45,6 +45,10 @@ router.post('/posts/add', [
 // Edit Form GET
 router.get('/posts/edit/:id', isAuth, (req, res) => {
   Post.findById(req.params.id, (err, post) => {
+    if (err) {
+      console.log(err);
+    }
+
     if (post.author != req.user._id) {
       req.flash('danger', 'You are not authorized to edit this')
       res.redirect('/')
@@ -57,7 +61,7 @@ router.get('/posts/edit/:id', isAuth, (req, res) => {
 });
 
 // Edit Form POST
-router.post('/posts/edit/:id', (req, res) => {
+router.post('/posts/edit/:id', isAuth, (req, res) => {
   let post = {}
   post.title = req.body.title;
   post.content = req.body.content;
@@ -88,7 +92,7 @@ router.get('/posts/:id', (req, res) => {
 });
 
 // Single post DELETE
-router.delete('/posts/:id', (req, res) => {
+router.delete('/posts/:id', isAuth, (req, res) => {
   if (!req.user._id) {
     res.status(500).send();
   } else {
