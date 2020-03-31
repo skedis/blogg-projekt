@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 
@@ -38,7 +39,7 @@ app.use(session({
 }));
 
 // Express messages setup
-app.use(require('connect-flash')());
+app.use(flash());
 app.use((req, res, next) => {
   res.locals.messages = require('express-messages')(req, res);
   next();

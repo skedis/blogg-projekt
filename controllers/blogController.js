@@ -89,7 +89,7 @@ exports.postEditPost = (req, res) => {
 exports.getSinglePost = (req, res) => {
   Post.findById(req.params.id, (err, post) => {
     User.findById(post.author, (err, user) => {
-      res.render('post', {
+      res.render('single_post', {
         post: post,
         username: user.username
       });

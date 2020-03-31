@@ -19,7 +19,6 @@ exports.getLogin = (req, res) => {
 // Logout user
 exports.getLogout = (req, res) => {
   req.logout();
-  req.flash('success', 'You have logged out');
   res.redirect('/');
 }
 
@@ -51,7 +50,7 @@ exports.postRegister = (req, res) => {
     });
 
     // Salting & hashing password
-    bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.genSalt((err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) {
           console.log(err);

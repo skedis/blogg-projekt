@@ -4,17 +4,16 @@ block content
   br
   h1 Register Account
   form(method="POST", action="/auth/register")
-    #form-group
+    .form-group
       label Username:
-      input.form-control(name="username", type="text")
-    #form-group
+      input.form-control(name="username", type="text", required, autofocus)
+    .form-group
       label Email:
-      input.form-control(name="email", type="email")
-    #form-group
+      input.form-control(name="email", type="email", required)
+    .form-group
       label Password:
-      input.form-control(name="password", type="password")
-    #form-group
+      input.form-control(name="password", type="password", required)
+    .form-group
       label Confirm Password:
-      input.form-control(name="password_confirm", type="password")
-    br
+      input.form-control(name="password_confirm", type="password", required)
     input.btn.btn-primary(type="submit", value="Register")
