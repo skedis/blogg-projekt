@@ -1,4 +1,4 @@
-// Get delete button and add EventListener if it exists on the page
+// Get delete button and add EventListener to it
 let deleteButton = document.querySelector('.delete-post');
 deleteButton && deleteButton.addEventListener('click', deletePost);
 

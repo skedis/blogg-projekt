@@ -1,33 +1,10 @@
 const express = require('express');
 
+const blogController = require('../controllers/blogController');
+
 const router = express.Router();
 
-// Models
-let Post = require('../models/post');
-
-// Routes
-router.get('/', (req, res) => {
-  // Problem >>>>>>>>>>>>>>>>
-  Post.aggregate([
-    {
-      $lookup: {
-        from: 'users',
-        localField: 'author',
-        foreignField: '_id',
-        as: 'authorName'
-      }
-    }
-  ]).exec((err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(result);
-
-      res.render('index', {
-        posts: result
-      });
-    }
-  });
-});
+// GET Routes
+router.get('/', blogController.getIndex);
 
 module.exports = router;

@@ -5,9 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 
-const config = require('./config/database');
-
-mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/blog-projekt', { useNewUrlParser: true, useUnifiedTopology: true });
 let db = mongoose.connection;
 
 // Check connection
@@ -30,18 +28,16 @@ app.set('view engine', 'pug');
 // Set public folder
 app.use(express.static(path.join(__dirname, 'public'))); 
 
-// Middlewares ----------------------------------------
-
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Express session middleware
+// Express session setup
 app.use(session({
   secret: 'keyboard cat',
   resave: true,
   saveUninitialized: true
 }));
 
-// Express messages middleware
+// Express messages setup
 app.use(require('connect-flash')());
 app.use((req, res, next) => {
   res.locals.messages = require('express-messages')(req, res);
@@ -50,11 +46,11 @@ app.use((req, res, next) => {
 
 // Passport config
 require('./config/passport')(passport);
-// Passport middleware
+// Passport setup
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Allow access to the user object when handling other routes
+// Allow access to the user object when handling the res object
 app.get('*', (req, res, next) => {
   res.locals.user = req.user || null;
   next();
@@ -63,10 +59,10 @@ app.get('*', (req, res, next) => {
 // Routes ----------------------------------------------
 let indexRoute = require('./routes/index');
 let postsRoute = require('./routes/posts');
-let usersRoute = require('./routes/users');
+let authRoute = require('./routes/auth');
 app.use(indexRoute)
-app.use(postsRoute)
-app.use(usersRoute)
+app.use('/posts', postsRoute)
+app.use('/auth', authRoute)
 
 // Start listening for requests
 app.listen(3000, () => {
