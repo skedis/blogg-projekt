@@ -1,7 +1,7 @@
 # Blogg-projekt
 
 Simple web application with Node.js.
-Lacks some desired functionality, otherwise working fine.
+Lacks some desired functionality, otherwise running fine.
 
 ## Requirements
 
