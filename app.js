@@ -2,11 +2,16 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 
-mongoose.connect('mongodb://localhost:27017/blog-projekt', { useNewUrlParser: true, useUnifiedTopology: true });
+// Passport config
+require('./config/passport')(passport);
+
+mongoose.connect('mongodb://localhost:27017/blog-projekt', 
+{ useNewUrlParser: true, useUnifiedTopology: true });
 let db = mongoose.connection;
 
 // Check connection
@@ -23,36 +28,31 @@ const app = express();
 
 const port = process.env.port || 3000;
 
-// Set view engine
 app.set('view engine', 'pug'); 
 
-// Set public folder
 app.use(express.static(path.join(__dirname, 'public'))); 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Express session setup
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'random secret. unimportant rn. who cares. hellllllloOOoOOOooOOoo.',
   resave: true,
   saveUninitialized: true
 }));
 
+// Helmet for various security purposes
+app.use(helmet())
+
 // Express messages setup
 app.use(flash());
-app.use((req, res, next) => {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
 
-// Passport config
-require('./config/passport')(passport);
 // Passport setup
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Allow access to the user object when handling the res object
+// Pass variables to all requests
 app.get('*', (req, res, next) => {
+  res.locals.messages = require('express-messages')(req, res);
   res.locals.user = req.user || null;
   next();
 });
@@ -66,6 +66,6 @@ app.use('/posts', postsRoute)
 app.use('/auth', authRoute)
 
 // Start listening for requests
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`Server now listening at http://127.0.0.1:${port}/`);
 });
